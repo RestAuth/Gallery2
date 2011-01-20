@@ -1,0 +1,35 @@
+=== ABOUT ===
+This is a plugin for Gallery2 [1] that integrates it into the RestAuth shared
+authentication framework. For the plugin to work, it requires Gallery2 to be
+patched (see INSTALLATION). So far, the plugin only uses the most basic features
+of RestAuth, that is, it only authenticates users against a RestAuth server. No
+settings, groups, etc. are synchronized.
+
+[1] http://gallery.sf.net
+
+=== INSTALLATION ===
+Generic installation instructions for installing a Gallery2 module can be found
+here:
+	http://codex.gallery2.org/Gallery2:User_Contributions#Modules
+
+This module requires php-restauth[1] to be installed and in the path of your
+system.
+
+Additionally, this module requires a patch for Gallery2 for it to work. The
+patches/ directory includes two patches, you can only use one of them:
+
+* verification:
+  Only verify existing user-accounts, you have to have a local account in order
+  to use your RestAuth password.
+* autocreate:
+  Automatically creates a local user if the user does not yet exist locally. The
+  downside is that the patch is more invasive which increases the chance that it
+  somehow breaks Gallery2 in subtle ways.
+
+I guess most users will want to use the autocreate patch. To apply either patch,
+go to your gallery2 directory and execute:
+	patch < *path-to-patch*
+
+=== HOW TO USE ===
+The plugin requires configuration in the RestAuth page. The settings are fairly
+straight-forward and described on that page.
