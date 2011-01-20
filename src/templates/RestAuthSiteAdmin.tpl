@@ -31,6 +31,14 @@
   <input name="{g->formVar var="form[restAuthPassword]"}" type="password" value="{$form.restAuthPassword}"/>
 </div>
 
+<div class="gbBlock">
+  <p class="giDescription">
+    {g->text text="You can require that a user is in a RestAuth group to be able to log in."}
+  </p>
+  <label for="cbRestAuthRequireGroup"> {g->text text="Group:"} </label>
+  <input name="{g->formVar var="form[restAuthRequireGroup]"}" type="text" value="{$form.restAuthRequireGroup}"/>
+</div>
+
 <!--<div class="gbBlock">
   <p class="giDescription">
     {g->text text="Should gallery allow registrations of new users?"}

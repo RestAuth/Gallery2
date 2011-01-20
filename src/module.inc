@@ -31,6 +31,7 @@
 
 require_once( "restauth/restauth_users.php" );
 require_once( "restauth/restauth_common.php" );
+require_once( "restauth/restauth_errors.php" );
  
 class RestAuthModule extends GalleryModule {
 
@@ -87,7 +88,19 @@ class RestAuthModule extends GalleryModule {
 		$pass = $form['password'];
 		$restUser = new RestAuthUser( $conn, $name );
 		
-		$correct = $restUser->verify_password( $pass );
+		try {
+			$correct = $restUser->verify_password( $pass );
+			if ( array_key_exists( 'restAuthRequireGroup', $settings ) &&
+					$settings['restAuthRequireGroup'] ) {
+				$req_group = $settings['restAuthRequireGroup'];
+				if ( ! $restUser->in_group( $req_group ) ) {
+					return array( null, $error, false );
+				}
+			}
+		} catch ( RestAuthException $e ) {
+			// TODO: Maybe catch exceptions in a more detailed way?
+			return array( null, $error, $false );
+		}
 		if ( $correct ) {
 			$localUser = new GalleryUser();
 			$localUser->create( $name );

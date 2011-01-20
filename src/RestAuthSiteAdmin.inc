@@ -39,7 +39,7 @@ class RestAuthSiteAdminController extends GalleryController {
 
 			$settings = array( 'restAuthServer', 'restAuthUser',
 				'restAuthPassword', 'restAuthRegister', 
-				'restAuthRegistration' );
+				'restAuthRegistration', 'restAuthRequireGroup' );
 			foreach( $settings as $key ) {
 				if ( isset( $form[$key] ) ) {
 					$ret = $module->setParameter( $key, $form[$key] );
@@ -106,7 +106,7 @@ class RestAuthSiteAdminView extends GalleryView {
 
 			$settings = array( 'restAuthServer', 'restAuthUser',
 				'restAuthPassword', 'restAuthRegister',
-				'restAuthRegistration' );
+				'restAuthRegistration', 'restAuthRequireGroup' );
 			foreach( $settings as $key ) {
 				if (!empty($params[$key])) {
 					$form[$key] = $params[$key];
