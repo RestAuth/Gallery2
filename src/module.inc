@@ -82,8 +82,6 @@ class RestAuthModule extends GalleryModule {
 
 		$conn = new RestAuthConnection( $settings['restAuthServer'],
 			$settings['restAuthUser'], $settings['restAuthPassword'] );
-#		$conn = new RestAuthConnection( 'https://auth.fsinf.at',
-#			'mati-photos', 'ReiT97Lnh5PUJ7HotrR6emizv1L2xa' );
 
 		$name = $form['username'];
 		$pass = $form['password'];
