@@ -99,12 +99,30 @@ class RestAuthModule extends GalleryModule {
 			}
 		} catch ( RestAuthException $e ) {
 			// TODO: Maybe catch exceptions in a more detailed way?
-			return array( null, $error, $false );
+			return array( null, $error, false );
 		}
 		if ( $correct ) {
 			$localUser = new GalleryUser();
-			$localUser->create( $name );
-			$localUser->save();			
+			$ret = $localUser->create( $name );
+			if ( ! is_null( $ret ) ) {
+				if ( $ret->getErrorCode() & ERROR_COLLISION ) {
+					// the user was already stored in the local database
+					list ($ret, $localUser) = GalleryCoreApi::fetchUserByUsername($name);
+				} else { // other error:
+					return array( null, $error, false );
+				}
+			}
+			$restProps = $restUser->get_properties();
+			if ( array_key_exists( 'full name', $restProps ) ) {
+				$localUser->setFullName( $restProps['full name'] );
+			}
+			if ( array_key_exists( 'email', $restProps ) ) {
+				$localUser->setEmail( $restProps['email'] );
+			}
+			if ( array_key_exists( 'language', $restProps ) ) {
+				$localUser->setLanguage( $restProps['language'] );
+			}
+			$localUser->save();
 			return array( null, $error, true );
 		} else {
 			return array( null, $error, false );
