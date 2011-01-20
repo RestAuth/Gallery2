@@ -28,16 +28,17 @@
     {g->text text="The password that gallery should identify itself with."}
   </p>
   <label for="cbRestAuthPassword"> {g->text text="Password:"} </label>
-  <input name="{g->formVar var="form[restAuthPassword]"}" type="text" value="{$form.restAuthPassword}"/>
+  <input name="{g->formVar var="form[restAuthPassword]"}" type="password" value="{$form.restAuthPassword}"/>
 </div>
-<div class="gbBlock">
+
+<!--<div class="gbBlock">
   <p class="giDescription">
     {g->text text="Should gallery allow registrations of new users?"}
   </p>
   <label for="cbRestAuthRegistrationInput"> {g->text text="Allow registrations:"} </label>
   <input id="cbRestAuthRegistrationInput" name="{g->formVar var="form[restAuthRegistration]"}" type="checkbox"{if !empty($form.restAuthRegistration)} checked="checked"{/if}/>
 </div>
-  
+-->
 <div class="gbBlock gcBackground1">
   <input class="inputTypeSubmit" name="{g->formVar var="form[action][save]"}" type="submit" value="{g->text text="Save"}"/>
   <input class="inputTypeSubmit" name="{g->formVar var="form[action][reset]"}" type="submit" value="{g->text text="Reset"}"/>
