@@ -1,5 +1,5 @@
---- UserLogin.inc.orig	2011-01-20 13:14:20.440763277 +0100
-+++ UserLogin.inc	2011-01-20 17:14:33.443768930 +0100
+--- modules/core/UserLogin.inc.orig	2011-01-20 13:14:20.440763277 +0100
++++ modules/core/UserLogin.inc	2011-01-20 17:14:33.443768930 +0100
 @@ -86,10 +86,33 @@
  		    return array($ret, null);
  		}
