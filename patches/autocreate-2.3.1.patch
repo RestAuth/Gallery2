@@ -1,0 +1,49 @@
+--- UserLogin.inc.orig	2011-01-20 13:14:20.440763277 +0100
++++ UserLogin.inc	2011-01-20 18:05:32.195768828 +0100
+@@ -81,15 +81,43 @@
+ 	    }
+ 
+ 	    if (empty($error)) {
++		GalleryUtilities::unsanitizeInputValues($form['password'], false);
++		$isCorrect = false;
++
++		list ($ret, $pluginInstances) = GalleryCoreApi::getAllFactoryImplementationIds(
++			'GalleryPasswordValidationPlugin');
++		if ($ret) {
++		    return array($ret, null);
++		}
++
++		foreach (array_keys($pluginInstances) as $pluginId) {
++		    list ($ret, $plugin) =
++			GalleryCoreApi::newFactoryInstanceById( 'GalleryPasswordValidationPlugin',
++			    $pluginId);
++		    if ($ret) {
++			return array($ret, null);
++		    }
++		    list ($ret, $pluginErrors, $isCorrect) =
++			$plugin->performPasswordValidation( $form );
++		    if ($ret) {
++			return array($ret, null);
++		    }
++		    if ($isCorrect) {
++			break;
++		    }
++		}
++
+ 		list ($ret, $user) = GalleryCoreApi::fetchUserByUsername($form['username']);
+ 		if ($ret && !($ret->getErrorCode() & ERROR_MISSING_OBJECT)) {
+ 		    return array($ret, null);
+ 		}
+-		GalleryUtilities::unsanitizeInputValues($form['password'], false);
+-		$isCorrect = (isset($user) && $user->isCorrectPassword($form['password']));
++		
++		if ( ! $isCorrect ) {
++		    $isCorrect = (isset($user) && $user->isCorrectPassword($form['password']));
++		}
++		$options = array('pass' => $isCorrect);
+ 
+ 		/* Prepare for validation */
+-		$options = array('pass' => $isCorrect);
+ 		list ($ret, $options['level']) =
+ 		    GalleryCoreApi::getPluginParameter('module', 'core', 'validation.level');
+ 		if ($ret) {
