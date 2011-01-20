@@ -30,7 +30,7 @@
  */
 
 require_once( "restauth/restauth_users.php" );
-require_once( "php-restauth/restauth_common.php" );
+require_once( "restauth/restauth_common.php" );
  
 class RestAuthModule extends GalleryModule {
 
