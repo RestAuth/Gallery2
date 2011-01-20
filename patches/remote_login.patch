@@ -1,0 +1,37 @@
+--- UserLogin.inc.orig	2011-01-20 13:14:20.440763277 +0100
++++ UserLogin.inc	2011-01-20 17:14:33.443768930 +0100
+@@ -86,10 +86,33 @@
+ 		    return array($ret, null);
+ 		}
+ 		GalleryUtilities::unsanitizeInputValues($form['password'], false);
++		    
+ 		$isCorrect = (isset($user) && $user->isCorrectPassword($form['password']));
++		$options = array('pass' => $isCorrect);
++
++		if ( ! $isCorrect ) {
++		    list ($ret, $pluginInstances) =
++			GalleryCoreApi::getAllFactoryImplementationIds('GalleryPasswordValidationPlugin');
++		    if ($ret) {
++			return array($ret, null);
++		    }
++
++		    foreach (array_keys($pluginInstances) as $pluginId) {
++			list ($ret, $plugin) =
++			    GalleryCoreApi::newFactoryInstanceById( 'GalleryPasswordValidationPlugin',
++				$pluginId);
++		        if ($ret) {
++			    return array($ret, null);
++		        }
++		        list ($ret, $pluginErrors, $isCorrect) =
++			    $plugin->performPasswordValidation($form, $options);
++		        if ($ret) {
++		   	    return array($ret, null);
++		        }
++		    }
++		}
+ 
+ 		/* Prepare for validation */
+-		$options = array('pass' => $isCorrect);
+ 		list ($ret, $options['level']) =
+ 		    GalleryCoreApi::getPluginParameter('module', 'core', 'validation.level');
+ 		if ($ret) {

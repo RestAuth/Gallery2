@@ -1,0 +1,3 @@
+* check sanity for RestAuth settings
+* synchronize settings (email, ...)
+* implement registration
