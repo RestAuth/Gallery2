@@ -12,6 +12,9 @@ Generic installation instructions for installing a Gallery2 module can be found
 here:
 	http://codex.gallery2.org/Gallery2:User_Contributions#Modules
 
+You must copy (or symlink) the src/ directory under the name "restauth" to the 
+modules directory of your Gallery2 installation.
+
 This module requires php-restauth[1] to be installed and in the path of your
 system.
 
