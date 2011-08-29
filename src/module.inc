@@ -89,11 +89,11 @@ class RestAuthModule extends GalleryModule {
 		$restUser = new RestAuthUser( $conn, $name );
 		
 		try {
-			$correct = $restUser->verify_password( $pass );
+			$correct = $restUser->verifyPassword( $pass );
 			if ( array_key_exists( 'restAuthRequireGroup', $settings ) &&
 					$settings['restAuthRequireGroup'] ) {
 				$req_group = $settings['restAuthRequireGroup'];
-				if ( ! $restUser->in_group( $req_group ) ) {
+				if ( ! $restUser->inGroup( $req_group ) ) {
 					return array( null, $error, false );
 				}
 			}
@@ -112,7 +112,7 @@ class RestAuthModule extends GalleryModule {
 					return array( null, $error, false );
 				}
 			}
-			$restProps = $restUser->get_properties();
+			$restProps = $restUser->getProperties();
 			if ( array_key_exists( 'full name', $restProps ) ) {
 				$localUser->setFullName( $restProps['full name'] );
 			}
