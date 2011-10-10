@@ -29,9 +29,9 @@
  * @version $Revision$ $Date: 2006/01/05 07:00:00 $
  */
 
-require_once( "restauth/restauth_users.php" );
-require_once( "restauth/restauth_common.php" );
-require_once( "restauth/restauth_errors.php" );
+require_once( "RestAuth/restauth_users.php" );
+require_once( "RestAuth/restauth_common.php" );
+require_once( "RestAuth/restauth_errors.php" );
  
 class RestAuthModule extends GalleryModule {
 
